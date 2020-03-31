@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import countries from './country.json';
 import './App.css';
-import stayHome from './stayHome.png'
+import stayHome from './stayHome.png';
+const moment = require('moment');
 
 class App extends Component {
   state = {
@@ -73,11 +74,11 @@ class App extends Component {
                 this.state.covid.statewise.map((data,idx)=>{
                   return(
                     <div className="stateBox" key={idx}>
-                      <p>Total <span>in India</span> : {data.confirmed}</p>
+                      <p>{idx == 0 ? <span>Total in India</span> : <span>{data.state}</span>} : {data.confirmed}</p>
                       <p>Currently Infected : {data.active}</p>
                       <p>Recoverd : {data.recovered}</p>
                       <p>Death : {data.deaths}</p>
-                      <p className="lastUpdated">Last Updated : {data.lastupdatedtime}</p>
+                      <p className="lastUpdated">Last Updated : {moment(data.lastupdatedtime, 'DD/MM/YYYY hh:mm:ss').format('MMMM Do YYYY, h:mm:ss A')}</p>
                     </div>
                   )
                 })
@@ -104,7 +105,7 @@ class App extends Component {
               <p>Total : {this.state.otherCovid.confirmed.value}</p>
               <p>Recoverd : {this.state.otherCovid.recovered.value}</p>
               <p>Death : {this.state.otherCovid.deaths.value}</p>
-              <p className="lastUpdated">Last Updated : {this.state.otherCovid.lastUpdate}</p>
+              <p className="lastUpdated">Last Updated : {moment(this.state.otherCovid.lastUpdate).format('MMMM Do YYYY, h:mm:ss A')}</p>
             </div> : this.state.loadingOther ? <p>Loading...</p> : null}
             {this.state.noOtherCovid ? <p>No Patient Here, Stay Safe</p> : null}
           </div>
