@@ -89,36 +89,3 @@
 .lastUpdated {
   font-size: 10px;
 }
-
-.stayHome {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.stayHome img {
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-}
-
-.footerCss {
-  margin-top: 10px;
-  color: #fff;
-}
-
-.indiaSelect {
-  float: left;
-  margin-left: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: #fff;
-}
-
-.chooseOption {
-  background-color: transparent!important;
-}

@@ -21,6 +21,10 @@ class App extends Component {
       }));
   }
 
+  constructor(props) {
+    super(props);
+  }
+
   handleChange = (e) => {
     e.preventDefault();
     let countryCode = e.target.value || "CN";

@@ -9,8 +9,7 @@ class App extends Component {
     otherCovid : {},
     indiaLoaded : false,
     noOtherCovid : false,
-    loadingOther : false,
-    showIndia : false
+    loadingOther : false
   }
   componentDidMount() {
     fetch('https://api.covid19india.org/data.json')
@@ -21,37 +20,34 @@ class App extends Component {
       }));
   }
 
+  constructor(props) {
+    super(props);
+  }
+
   handleChange = (e) => {
     e.preventDefault();
     let countryCode = e.target.value || "CN";
     this.setState({
-      loadingOther : true,
-      noOtherCovid : false
+      loadingOther : true
     });
 
     fetch(`https://covid19.mathdro.id/api/countries/${countryCode}`)
     .then((res) => {
       if(res.status == '404'){
-        this.setState({
-          noOtherCovid : true
-        });
+
       }
       return res.json();
     })
     .then(data => this.setState({ 
       otherCovid : data,
-      loadingOther : false
+      //loadingOther : false
     }))
     .catch((err)=>{
       console.log("Here");
     });
 
-  }
+    console.log(this.state.loadingOther);
 
-  enableIndia = () =>{
-    this.setState({
-      showIndia : !this.state.showIndia
-    })
   }
 
   render() {
@@ -61,15 +57,13 @@ class App extends Component {
           <h3>Hello Corona</h3>
         </div>
 
-      { this.state.indiaLoaded ? <>
-
         <div className="indiaDetail">
           <label className="indiaHeader">
-            <input id="indeterminate-checkbox" type="checkbox" onChange={this.enableIndia}/>
+            <input id="indeterminate-checkbox" type="checkbox"/>
               <span className="indiaSelect">India</span>
             </label>
             <div className="indiaStates">
-              {this.state.covid && this.state.indiaLoaded && this.state.showIndia ?
+              {this.state.covid && this.state.indiaLoaded ?
                 this.state.covid.statewise.map((data,idx)=>{
                   return(
                     <div className="stateBox" key={idx}>
@@ -106,11 +100,10 @@ class App extends Component {
               <p>Death : {this.state.otherCovid.deaths.value}</p>
               <p className="lastUpdated">Last Updated : {this.state.otherCovid.lastUpdate}</p>
             </div> : this.state.loadingOther ? <p>Loading...</p> : null}
-            {this.state.noOtherCovid ? <p>No Patient Here, Stay Safe</p> : null}
+
+            {this.state.noOtherCovid ? <p>No Pat</p> : null}
           </div>
         </div>
-
-        </> : null}
 
         <div className="stayHome">
           <img src= {stayHome}/>

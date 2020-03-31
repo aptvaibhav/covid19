@@ -21,6 +21,10 @@ class App extends Component {
       }));
   }
 
+  constructor(props) {
+    super(props);
+  }
+
   handleChange = (e) => {
     e.preventDefault();
     let countryCode = e.target.value || "CN";
@@ -61,7 +65,7 @@ class App extends Component {
           <h3>Hello Corona</h3>
         </div>
 
-      { this.state.indiaLoaded ? <>
+      { this.state.showIndia ? <>
 
         <div className="indiaDetail">
           <label className="indiaHeader">

@@ -9,8 +9,7 @@ class App extends Component {
     otherCovid : {},
     indiaLoaded : false,
     noOtherCovid : false,
-    loadingOther : false,
-    showIndia : false
+    loadingOther : false
   }
   componentDidMount() {
     fetch('https://api.covid19india.org/data.json')
@@ -19,6 +18,10 @@ class App extends Component {
         covid : data,
         indiaLoaded : true
       }));
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   handleChange = (e) => {
@@ -48,12 +51,6 @@ class App extends Component {
 
   }
 
-  enableIndia = () =>{
-    this.setState({
-      showIndia : !this.state.showIndia
-    })
-  }
-
   render() {
     return (
       <div className="App">
@@ -61,15 +58,13 @@ class App extends Component {
           <h3>Hello Corona</h3>
         </div>
 
-      { this.state.indiaLoaded ? <>
-
         <div className="indiaDetail">
           <label className="indiaHeader">
             <input id="indeterminate-checkbox" type="checkbox" onChange={this.enableIndia}/>
               <span className="indiaSelect">India</span>
             </label>
             <div className="indiaStates">
-              {this.state.covid && this.state.indiaLoaded && this.state.showIndia ?
+              {this.state.covid && this.state.indiaLoaded ?
                 this.state.covid.statewise.map((data,idx)=>{
                   return(
                     <div className="stateBox" key={idx}>
@@ -109,8 +104,6 @@ class App extends Component {
             {this.state.noOtherCovid ? <p>No Patient Here, Stay Safe</p> : null}
           </div>
         </div>
-
-        </> : null}
 
         <div className="stayHome">
           <img src= {stayHome}/>

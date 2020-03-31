@@ -105,20 +105,3 @@
   max-height: 100%;
   display: block;
 }
-
-.footerCss {
-  margin-top: 10px;
-  color: #fff;
-}
-
-.indiaSelect {
-  float: left;
-  margin-left: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: #fff;
-}
-
-.chooseOption {
-  background-color: transparent!important;
-}
