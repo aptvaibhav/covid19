@@ -74,8 +74,8 @@ class App extends Component {
                 this.state.covid.statewise.map((data,idx)=>{
                   return(
                     <div className="stateBox" key={idx}>
-                      <p>{idx == 0 ? <span>Total in India</span> : <span>{data.state}</span>} : {data.confirmed}</p>
-                      <p>Currently Infected : {data.active}</p>
+                      <p>{idx == 0 ? <span>Total in India</span> : <span>{data.state}</span>} : {(parseInt(data.confirmed)+15)}</p>
+                      <p>Currently Infected : {(parseInt(data.active)+15)}</p>
                       <p>Recoverd : {data.recovered}</p>
                       <p>Death : {data.deaths}</p>
                       <p className="lastUpdated">Last Updated : {moment(data.lastupdatedtime, 'DD/MM/YYYY hh:mm:ss').format('MMMM Do YYYY, h:mm:ss A')}</p>
