@@ -1,6 +1,55 @@
 .App, body {
   text-align: center;
-  background-color: #282c34;
+  background-color: #1e1d21;
+}
+
+.card-block{
+  background-color: #262529 !important;
+}
+
+.checkBoxes{
+  background-color: #262529;
+  padding: 10px !important;
+}
+
+.switch-bar{
+  background-color: #262529;
+  padding: 10px;
+  color: white;
+}
+
+.switch-bar label{
+  color: white;
+}
+
+.description{
+  margin-top: 23px;
+  margin-bottom: 2px;
+  color: white;
+}
+
+.cardData{
+  display: block;
+  font-weight: bold;
+  color:rgb(88, 81, 219);;
+}
+
+.stat-ci{
+  display: block;
+  font-weight: bold;
+  color: rgb(76, 207, 118);
+}
+
+.stat-re{
+  display: block;
+  font-weight: bold;
+  color: #009688;
+}
+
+.stat-de{
+  display: block;
+  font-weight: bold;
+  color: rgb(225, 48, 108);
 }
 
 .App-logo {
@@ -38,6 +87,20 @@
   }
 }
 
+.header{
+  background-color: #262529 !important;
+  padding: 1px;
+}
+
+.header p{
+  font-size: 25px;
+  font-weight: 500;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: #fff;
+  font-family: serif;
+}
+
 .header h3 {
   font-size: 25px;
   color: #fff;
@@ -58,7 +121,7 @@
 
 .selectCountry select {
   color: #fff!important;
-  width: 90%;
+  width: 100%;
   border: 1px solid #2776cc!important;
 }
 
@@ -74,11 +137,25 @@
   color: #fff;
 }
 
+.loadingOtherColor{
+  color: white;
+}
+
 .stateBox {
-  width: 90%;
+  width: 100%;
   border: 1px solid #fff;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  color: white;
+}
+
+.col12pad{
+  padding-top: 15px !important;
+}
+
+.chooseOpt{
+  margin-top: 15px;
+    color: white;
 }
 
 .stateBox p {
@@ -88,16 +165,12 @@
 
 .lastUpdated {
   font-size: 10px;
+  margin-top: 0px;
+  color: white;
 }
 
 .stayHome {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  
 }
 
 .stayHome img {
@@ -107,7 +180,7 @@
 }
 
 .footerCss {
-  margin-top: 10px;
+  margin-bottom: 10px;
   color: #fff;
 }
 

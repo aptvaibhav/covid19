@@ -11,7 +11,10 @@ class App extends Component {
     indiaLoaded : false,
     noOtherCovid : false,
     loadingOther : false,
-    showIndia : false
+    showIndia : false,
+    covidIndia : {},
+    showWorld : false,
+    otherCovidName : ''
   }
   componentDidMount() {
     fetch('https://api.covid19india.org/data.json')
@@ -23,8 +26,10 @@ class App extends Component {
   }
 
   handleChange = (e) => {
-    e.preventDefault();
+    e.persist()
     let countryCode = e.target.value || "CN";
+    var index = e.nativeEvent.target.selectedIndex;
+    console.log(e.nativeEvent.target[index].text);
     this.setState({
       loadingOther : true,
       noOtherCovid : false
@@ -41,6 +46,7 @@ class App extends Component {
     })
     .then(data => this.setState({ 
       otherCovid : data,
+      otherCovidName : e.nativeEvent.target[index].text,
       loadingOther : false
     }))
     .catch((err)=>{
@@ -52,74 +58,144 @@ class App extends Component {
   enableIndia = () =>{
     this.setState({
       showIndia : !this.state.showIndia
-    })
+    });
+  }
+
+  enableWorld = () => {
+    this.setState({
+      showWorld : !this.state.showWorld
+    });
   }
 
   render() {
     return (
       <div className="App">
         <div className="header">
-          <h3>Hello Corona</h3>
+          <p>Hello Corona</p>
         </div>
 
-      { this.state.indiaLoaded ? <>
+        <p className="description">
+          COVID19 Cases in India Till Now
+        </p>
 
-        <div className="indiaDetail">
-          <label className="indiaHeader">
-            <input id="indeterminate-checkbox" type="checkbox" onChange={this.enableIndia}/>
-              <span className="indiaSelect">India</span>
-            </label>
-            <div className="indiaStates">
-              {this.state.covid && this.state.indiaLoaded && this.state.showIndia ?
-                this.state.covid.statewise.map((data,idx)=>{
-                  return(
-                    <div className="stateBox" key={idx}>
-                      <p>{idx == 0 ? <span>Total in India</span> : <span>{data.state}</span>} : {(parseInt(data.confirmed)+15)}</p>
-                      <p>Currently Infected : {(parseInt(data.active)+15)}</p>
-                      <p>Recoverd : {data.recovered}</p>
-                      <p>Death : {data.deaths}</p>
-                      <p className="lastUpdated">Last Updated : {moment(data.lastupdatedtime, 'DD/MM/YYYY hh:mm:ss').format('MMMM Do YYYY, h:mm:ss A')}</p>
-                    </div>
-                  )
-                })
-                 : null }
+        <div className="row">
+          <div className="col s6 m6">
+            <div className="card-block card blue-grey">
+              <div className="card-content white-text">
+                <span className="cardTitle">Total Confirmed</span>
+                {this.state.covid && this.state.indiaLoaded ? <span className="cardData">{parseInt(this.state.covid.statewise[0].confirmed) + 15}</span> : <span className="cardData">Loading..</span>}
+              </div>
+            </div>
+          </div>
+          <div className="col s6 m6">
+            <div className="card-block card blue-grey">
+              <div className="card-content white-text">
+                <span className="cardTitle">Currently Infected</span>
+                {this.state.covid && this.state.indiaLoaded ? <span className="stat-ci">{parseInt(this.state.covid.statewise[0].active) + 15}</span> : <span className="cardData">Loading..</span>}
+              </div>
+            </div>
+          </div>
+          <div className="col s6 m6">
+            <div className="card-block card blue-grey">
+              <div className="card-content white-text">
+                <span className="cardTitle">Total Recoverd</span>
+                {this.state.covid && this.state.indiaLoaded ?  <span className="stat-re">{this.state.covid.statewise[0].recovered}</span> : <span className="cardData">Loading..</span>}
+              </div>
+            </div>
+          </div>
+          <div className="col s6 m6">
+            <div className="card-block card blue-grey">
+              <div className="card-content white-text">
+                <span className="cardTitle">Total Death</span>
+                {this.state.covid && this.state.indiaLoaded ? <span className="stat-de">{this.state.covid.statewise[0].deaths}</span> : <span className="cardData">Loading..</span>}
+              </div>
             </div>
           </div>
 
-        <div className="selectCountry">
-          <select className="browser-default chooseOption" onChange={this.handleChange}>
-            <option value="">Choose your country</option>
-            {countries.map((data,idx)=>{
-              return (
-                <option value={data.code} key={idx}> {data.name} {data.emoji}</option>
-              )
-            })}
-          </select>
-        </div>
-
-
-        <div className="otherDetail">
-          <div className="indiaStates">
-            {!this.state.loadingOther && this.state.otherCovid && this.state.otherCovid.confirmed && this.state.otherCovid.recovered && this.state.otherCovid.deaths && this.state.otherCovid.lastUpdate ? 
-            <div className="stateBox">
-              <p>Total : {this.state.otherCovid.confirmed.value}</p>
-              <p>Recoverd : {this.state.otherCovid.recovered.value}</p>
-              <p>Death : {this.state.otherCovid.deaths.value}</p>
-              <p className="lastUpdated">Last Updated : {moment(this.state.otherCovid.lastUpdate).format('MMMM Do YYYY, h:mm:ss A')}</p>
-            </div> : this.state.loadingOther ? <p>Loading...</p> : null}
-            {this.state.noOtherCovid ? <p>No Patient Here, Stay Safe</p> : null}
+          <div className="col s12 m12">
+            {this.state.covid && this.state.indiaLoaded ? <p className="lastUpdated">Last Updated : {moment(this.state.covid.statewise[0].lastupdatedtime, 'DD/MM/YYYY hh:mm:ss').format('MMMM Do YYYY, h:mm:ss A')}</p> : null}
           </div>
         </div>
 
-        </> : null}
+        <div className="row">
+          <div className="col s12 m12">
+            <div className="switch">
+              <div className="col s6 m6 checkBoxes">
+                {this.state.indiaLoaded && this.state.covid ?
+                <label>
+                  Indian Data
+                  <input type="checkbox" onChange={this.enableIndia}/>
+                  <span className="lever"></span>
+                </label> : null }
+              </div>
+              
+              <div className="col s6 m6 checkBoxes">
+                <label>
+                  World Data
+                  <input type="checkbox" onChange={this.enableWorld}/>
+                  <span className="lever"></span>
+                </label>
+              </div>
+            </div>
+          </div>
 
-        <div className="stayHome">
-          <img src= {stayHome}/>
+          <div className="col s12 m12">
+            {this.state.showWorld ?
+              <select className="browser-default chooseOption chooseOpt" onChange={this.handleChange}>
+                <option value="">Choose your country</option>
+                {countries.map((data,idx)=>{
+                  return (
+                    <option value={data.code} key={idx} name={data.name}> {data.name} {data.emoji}</option>
+                  )
+                })}
+              </select>: null }
+          </div>
+
+          <div className="col s12 m12">
+            {!this.state.loadingOther && this.state.showWorld && this.state.otherCovid && this.state.otherCovid.confirmed && this.state.otherCovid.recovered && this.state.otherCovid.deaths && this.state.otherCovid.lastUpdate ? 
+            <div className="stateBox">
+              <p>Total in {this.state.otherCovidName}: {this.state.otherCovid.confirmed.value}</p>
+              <p>Recoverd : {this.state.otherCovid.recovered.value}</p>
+              <p>Death : {this.state.otherCovid.deaths.value}</p>
+              <p className="lastUpdated">Last Updated : {moment(this.state.otherCovid.lastUpdate).format('MMMM Do YYYY, h:mm:ss A')}</p>
+            </div> : this.state.loadingOther ? <p className="loadingOtherColor">Loading...</p> : null}
+            {this.state.noOtherCovid ? this.state.showWorld ? <p className="loadingOtherColor">No Patient Here, Stay Safe</p> : null : null}
+          </div>
+
+          <div className="col s12 m12">
+                {this.state.covid && this.state.indiaLoaded && this.state.showIndia ?
+                  this.state.covid.statewise.map((data,idx)=>{
+
+                    if(idx == 0)
+                      return;
+                    return(
+                      <div className="stateBox" key={idx}>
+                        <p>{idx == 0 ? <span>Total in India</span> : <span>{data.state}</span>} : {(parseInt(data.confirmed)+15)}</p>
+                        <p>Currently Infected : {(parseInt(data.active)+15)}</p>
+                        <p>Recoverd : {data.recovered}</p>
+                        <p>Death : {data.deaths}</p>
+                        <p className="lastUpdated">Last Updated : {moment(data.lastupdatedtime, 'DD/MM/YYYY hh:mm:ss').format('MMMM Do YYYY, h:mm:ss A')}</p>
+                      </div>
+                    )
+                  })
+                  : null }
+            </div>
         </div>
 
-        <footer className="footerCss">
-          Developed by Team @ Tech Aditya
-        </footer>
+        <div className="row">
+          <div className="col s12 m12 stayHome">
+            <img src= {stayHome}/>
+          </div>
+        </div>
+
+        <div className="row">
+            <div className="col s12 m12">
+            <footer className="footerCss">
+              Developed by Team @ Tech Aditya
+            </footer>
+            </div>
+        </div>
+        
 
       </div>
     );
