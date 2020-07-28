@@ -71,7 +71,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="header">
-          <p>Hello Corona</p>
+          <p>Check Covid19 Status here</p>
         </div>
 
         <p className="description">
