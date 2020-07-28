@@ -191,7 +191,7 @@ class App extends Component {
         <div className="row">
             <div className="col s12 m12">
             <footer className="footerCss">
-              Developed by Team @ Tech Aditya
+              Developed by Team @ Tech Vaibhav Tyagi
             </footer>
             </div>
         </div>
