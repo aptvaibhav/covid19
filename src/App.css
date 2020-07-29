@@ -195,3 +195,15 @@
 .chooseOption {
   background-color: transparent!important;
 }
+
+
+@media screen and (max-width: 767px) {
+  .display1 {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .display2 {
+    display: none;
+  }
+}
